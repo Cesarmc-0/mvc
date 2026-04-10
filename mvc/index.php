@@ -16,6 +16,10 @@ if(isset($_GET['action'])){
     if($_GET['action']== 'getFormLogin'){
         $controllerBase->getFormLogin('views/html/login.php');
     }
+
+    if($_GET['action']== 'getFormCreateUser'){
+        $contollerRegister->getFormCreateUser();
+    }
    
 }else{
     $controllerBase->getFormLogin('views/html/home.php');
