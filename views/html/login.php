@@ -59,7 +59,7 @@
       </div>
 
       <!-- Form -->
-      <form id="loginForm" action="/register" method="POST" class="animate-fade-up delay-2 space-y-5">
+      <form id="loginForm" action="<?= SITE_URL ?>index.php?action=getFormLoginUser" method="POST" class="space-y-5">
 
         <!-- Email -->
         <div>

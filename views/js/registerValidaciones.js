@@ -23,6 +23,35 @@ class RegisterValidaciones {
         return true;
     }
 
+    validarTipoDocumento() {
+    const valor = document.getElementById('tipo_documento_id').value;
+
+    if (valor === '') {
+        this.mostrarError('tipo_documento_id', 'El tipo de documento es obligatorio.');
+        return false;
+    }
+
+    this.mostrarExito('tipo_documento_id');
+    return true;
+}
+
+    validarNumeroDocumento() {
+        const valor = document.getElementById('numero_documento').value.trim();
+        const regex = /^[a-zA-Z0-9]+$/;
+
+        if (valor === '') {
+            this.mostrarError('numero_documento', 'El número de documento es obligatorio.');
+            return false;
+        }
+        if (!regex.test(valor)) {
+            this.mostrarError('numero_documento', 'Solo letras y números, sin espacios.');
+            return false;
+        }
+
+    this.mostrarExito('numero_documento');
+    return true;
+}
+
     validarEmail() {
         const valor = document.getElementById('email').value.trim();
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -125,26 +154,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('registerForm');
 
     // Al enviar el formulario, corre todas las validaciones
-    form.addEventListener('submit', (e) => {
-        const nombreOk   = v.validarNombre();
-        const emailOk    = v.validarEmail();
-        const passOk     = v.validarPassword();
-        const confirmOk  = v.validarConfirmPassword();
+form.addEventListener('submit', (e) => {
+    const nombreOk    = v.validarNombre();
+    const tipoOk      = v.validarTipoDocumento();      
+    const documentoOk = v.validarNumeroDocumento();    
+    const emailOk     = v.validarEmail();
+    const passOk      = v.validarPassword();
+    const confirmOk   = v.validarConfirmPassword();
 
-        // Si alguna falla, no envía el formulario
-        if (!nombreOk || !emailOk || !passOk || !confirmOk) {
-            e.preventDefault();
-        }
-    });
+    if (!nombreOk || !tipoOk || !documentoOk || !emailOk || !passOk || !confirmOk) {
+        e.preventDefault();
+    }
+});
 
     // Validar campo por campo cuando el usuario sale del input (blur)
     document.getElementById('nombre').addEventListener('blur', () => v.validarNombre());
     document.getElementById('email').addEventListener('blur',  () => v.validarEmail());
     document.getElementById('password').addEventListener('blur', () => v.validarPassword());
     document.getElementById('password_confirm').addEventListener('blur', () => v.validarConfirmPassword());
+    document.getElementById('tipo_documento_id').addEventListener('blur', () => v.validarTipoDocumento());
+document.getElementById('numero_documento').addEventListener('blur',  () => v.validarNumeroDocumento());
 
     // Limpiar error mientras el usuario escribe
-    ['nombre', 'email', 'password', 'password_confirm'].forEach((id) => {
-        document.getElementById(id).addEventListener('input', () => v.limpiarError(id));
-    });
+   ['nombre', 'tipo_documento_id', 'numero_documento', 'email', 'password', 'password_confirm'].forEach((id) => {
+    document.getElementById(id).addEventListener('input', () => v.limpiarError(id));
+});
 });
