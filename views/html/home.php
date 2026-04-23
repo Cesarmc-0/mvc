@@ -1,3 +1,13 @@
+<?php
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Pragma: no-cache');
+header('Expires: 0');
+// Proteger la página — si no hay sesión, redirige al login
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ' . SITE_URL . 'index.php?action=getFormLogin');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,23 +17,35 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap"
-    rel="stylesheet" 
+    rel="stylesheet"
   />
-  <link rel="stylesheet" href="views/styles/home.css"/>
+  <link rel="stylesheet" href="<?= SITE_URL ?>views/styles/home.css"/>
 </head>
 <body>
 
   <!-- NAV -->
   <nav class="nav" aria-label="Navegación principal">
-    <a href="/" class="nav__brand" aria-label="Ir al inicio - Lumière Hotels">Lumière</a>
+    <a href="<?= SITE_URL ?>index.php" class="nav__brand" aria-label="Ir al inicio - Lumière Hotels">Lumière</a>
+
     <ul class="nav__links" role="list">
       <li><a href="#destinos">Destinos</a></li>
       <li><a href="#habitaciones">Habitaciones</a></li>
       <li><a href="#experiencias">Experiencias</a></li>
       <li><a href="#contacto">Contacto</a></li>
-    </ul><br>
-    <a href="<?= SITE_URL ?>index.php?action=getFormLogin" class="nav__login">Iniciar sesión</a>
-    <a href="<?= SITE_URL ?>index.php?action=getFormRegister" class="nav__login">Registrarse</a>
+    </ul>
+
+    <!-- Bienvenida + acciones del usuario -->
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span style="color:white; font-size:14px;">
+        Bienvenido, <?= htmlspecialchars($_SESSION['usuario']['nombre']) ?>
+      </span>
+      <a href="<?= SITE_URL ?>index.php?action=getFormCreateReserva" class="nav__login">
+        Reservar
+      </a>
+      <a href="<?= SITE_URL ?>index.php?action=logout" class="nav__login" style="border-color:rgba(255,255,255,0.4);">
+        Cerrar sesión
+      </a>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -43,25 +65,11 @@
         <div class="search-card__field">
           <label for="destino">Destino</label>
           <div class="search-card__input-wrapper">
-            <svg
-              class="search-card__icon"
-              aria-hidden="true"
-              focusable="false"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg class="search-card__icon" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
-            <input
-              id="destino"
-              name="destino"
-              type="search"
-              placeholder="Ciudad o hotel…"
-              autocomplete="off"
-            />
+            <input id="destino" name="destino" type="search" placeholder="Ciudad o hotel…" autocomplete="off"/>
           </div>
         </div>
 
@@ -164,7 +172,7 @@
     <ul class="benefits__grid" role="list">
 
       <li class="benefit">
-        <svg class="benefit__icon" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg class="benefit__icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
         </svg>
         <h3 class="benefit__title">Precio garantizado</h3>
@@ -172,7 +180,7 @@
       </li>
 
       <li class="benefit">
-        <svg class="benefit__icon" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg class="benefit__icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
         <h3 class="benefit__title">Cancelación flexible</h3>
@@ -180,7 +188,7 @@
       </li>
 
       <li class="benefit">
-        <svg class="benefit__icon" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg class="benefit__icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
         </svg>
         <h3 class="benefit__title">Soporte 24/7</h3>
@@ -192,7 +200,7 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <a href="/" class="footer__brand" aria-label="Ir al inicio - Lumière Hotels">Lumière Hotels</a>
+    <a href="<?= SITE_URL ?>index.php" class="footer__brand" aria-label="Ir al inicio - Lumière Hotels">Lumière Hotels</a>
     <p class="footer__copy">
       <small>© 2026 Lumière. Todos los derechos reservados.</small>
     </p>
