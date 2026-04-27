@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/models/conexion.php';
-require_once __DIR__ . '/models/UserRepository.php';
+require_once __DIR__ . '/models/Users.php';
 require_once __DIR__ . '/controllers/loginController.php';
 require_once __DIR__ . '/controllers/registerController.php';
 require_once __DIR__ . '/controllers/reservaController.php';
@@ -24,7 +24,7 @@ if (isset($_GET['action'])) {
     if ($_GET['action'] == 'getFormCreateUser') {
         $resultado = $controllerRegister->getFormCreateUser();
         $_SESSION['resultado'] = $resultado;
-        header('Location: index.php?action=getFormRegister');
+        header('Location: index.php?action=getFormLogin');
         exit;
     }
     if ($_GET['action'] == 'getFormLoginUser') {
@@ -49,6 +49,9 @@ if (isset($_GET['action'])) {
 
     if ($_GET['action'] == 'cancelarReserva') {
     $controllerReserva->cancelarReserva();
+}
+    if ($_GET['action'] == 'exportarPDF') {
+    $controllerReserva->exportarPDF();
 }
 
 } else {

@@ -39,6 +39,10 @@ if (!isset($_SESSION['usuario'])) {
       <span class="text-white/70 text-sm">
         <a>Tus reservas, <?= htmlspecialchars($_SESSION['usuario']['nombre']) ?> </a>
       </span>
+         <a href="<?= SITE_URL ?>index.php?action=exportarPDF"
+       class="bg-[#1a1610] text-white px-6 py-3 text-sm tracking-widest uppercase hover:bg-[#3d3422] transition-colors duration-200">
+        Exportar PDF
+    </a>
       <a href="<?= SITE_URL ?>index.php?action=getFormCreateReserva"
          class="text-sm border border-white/50 text-white px-5 py-2 hover:bg-white hover:text-[#1a1610] transition-all duration-300">
         Nueva reserva

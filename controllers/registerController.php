@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/conexion.php';
-require_once __DIR__ . '/../models/UserRepository.php';
+require_once __DIR__ . '/../models/Users.php';
 
 class registerController {
 

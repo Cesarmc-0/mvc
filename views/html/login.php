@@ -43,9 +43,6 @@
     <a href="/html/home.php" class="font-display text-2xl font-semibold tracking-wide text-white">
       Lumière
     </a>
-    <a href="/html/login.php" class="text-sm border border-white/50 text-white px-5 py-2 hover:bg-white hover:text-[#1a1610] transition-all duration-300">
-      Iniciar sesión
-    </a>
   </nav>
 
   <!-- REGISTER CARD -->
@@ -86,7 +83,10 @@
             type="password"
             placeholder="••••••••"
             class="w-full px-4 py-3 border border-[#e8ddc9] bg-transparent font-body text-sm text-[#1a1610] placeholder-[#c4a97d] focus:border-[#c4a97d] transition-colors duration-200"
+          
           />
+             
+          <div id="error-password"></div>
         </div>
 
         <!-- Submit -->
@@ -102,15 +102,22 @@
 
       <!-- Footer del form -->
       <p class="text-center text-xs text-[#b08f5f] mt-6">
-        ¿Olvidaste La Contraseña?
-        <a href="<?= SITE_URL ?>index.php?action=getFormForgetPassword" class="underline underline-offset-4 hover:text-[#1a1610] transition-colors duration-200">
-           Recuperar Contraseña
+        ¿No tienes Cuenta?
+        <a href="<?= SITE_URL ?>index.php?action=getFormRegister" class="underline underline-offset-4 hover:text-[#1a1610] transition-colors duration-200">
+           Registrate
         </a>
       </p>
 
     </div>
   </main>
 
+    <script>
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+  </script>
+  <script src="<?= SITE_URL ?>views/js/registerValidaciones.js"></script>
   <script src="<?= SITE_URL ?>views/js/loginValidaciones.js"></script>
 </body>
 </html>

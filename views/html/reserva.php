@@ -45,10 +45,14 @@ if (!isset($_SESSION['usuario'])) {
     <a href="<?= SITE_URL ?>index.php" class="font-display text-2xl font-semibold tracking-wide text-white">
       Lumière
     </a>
+
     <div class="flex items-center gap-4">
       <span class="text-white text-sm">
         Bienvenido, <?= htmlspecialchars($_SESSION['usuario']['nombre']) ?>
       </span>
+          <a  href="<?= SITE_URL ?>index.php?action=getMisReservas" class="text-sm border border-white/50 text-white px-5 py-2 hover:bg-white hover:text-[#1a1610] transition-all duration-300">
+      Mis Reservas
+    </a>
       <a href="<?= SITE_URL ?>index.php?action=logout" class="text-sm border border-white/50 text-white px-5 py-2 hover:bg-white hover:text-[#1a1610] transition-all duration-300">
         Cerrar sesión
       </a>
@@ -84,25 +88,6 @@ if (!isset($_SESSION['usuario'])) {
       <!-- Form -->
       <form id="reservaForm" action="<?= SITE_URL ?>index.php?action=createReserva" method="POST" class="space-y-5">
 
-        <!-- Habitación -->
-        <div>
-          <label for="id_habitacion" class="block text-xs font-medium tracking-widest uppercase text-[#3d3422] mb-2">
-            Habitación
-          </label>
-          <select
-            id="id_habitacion"
-            name="id_habitacion"
-            class="w-full px-4 py-3 border border-[#e8ddc9] bg-[#faf8f4] text-sm text-[#1a1610] focus:border-[#c4a97d] transition-colors duration-200"
-          >
-            <option value="">Selecciona una habitación</option>
-            <?php foreach ($habitaciones as $hab): ?>
-              <option value="<?= $hab['id'] ?>">
-                N° <?= $hab['num_habitacion'] ?> — <?= $hab['categoria'] ?> — <?= $hab['max_personas'] ?> personas — $<?= number_format($hab['precio'], 2) ?>/noche
-              </option>
-            <?php endforeach; ?>
-          </select>
-          <div id="error-id_habitacion"></div>
-        </div>
 
         <!-- Fechas -->
         <div class="grid grid-cols-2 gap-4">
@@ -134,6 +119,27 @@ if (!isset($_SESSION['usuario'])) {
             <div id="error-fecha_fin"></div>
           </div>
         </div>
+
+                <!-- Habitación -->
+        <div>
+          <label for="id_habitacion" class="block text-xs font-medium tracking-widest uppercase text-[#3d3422] mb-2">
+            Habitación
+          </label>
+          <select
+            id="id_habitacion"
+            name="id_habitacion"
+            class="w-full px-4 py-3 border border-[#e8ddc9] bg-[#faf8f4] text-sm text-[#1a1610] focus:border-[#c4a97d] transition-colors duration-200"
+          >
+            <option value="">Selecciona una habitación</option>
+            <?php foreach ($habitaciones as $hab): ?>
+              <option value="<?= $hab['id'] ?>">
+                N° <?= $hab['num_habitacion'] ?> — <?= $hab['categoria'] ?> — <?= $hab['max_personas'] ?> personas — $<?= number_format($hab['precio'], 2) ?>/noche
+              </option>
+            <?php endforeach; ?>
+          </select>
+          <div id="error-id_habitacion"></div>
+        </div>
+
 
         <!-- Número de personas -->
         <div>
