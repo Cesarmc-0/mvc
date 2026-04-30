@@ -44,6 +44,11 @@ class ReservaRepository {
     ]);
     return $stmt->fetchAll();
 }
+    public function getCategorias(): array {
+    $stmt = $this->db->prepare("SELECT id, nombre FROM categorias");
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
     // Obtener reservas de un usuario
 public function getReservasPorUsuario(int $idUsuario): array {
     $stmt = $this->db->prepare("
@@ -68,7 +73,7 @@ public function getReservasPorUsuario(int $idUsuario): array {
     $stmt->execute([':id_usuario' => $idUsuario]);
     return $stmt->fetchAll();
 }
-    public function getReservasPorUsuarioPDF(int $idUsuario): array {
+    public function getReservasPorUsuarioPDF($idUsuario): array {
     $stmt = $this->db->prepare("
         SELECT 
             r.id,

@@ -70,7 +70,7 @@ if (!isset($_SESSION['usuario'])) {
       </div>
 
       <!-- Mensajes -->
-      <?php if (isset($_SESSION['resultado'])): ?>
+      <!-- <?php if (isset($_SESSION['resultado'])): ?>
         <?php foreach ($_SESSION['resultado'] as $key => $msg): ?>
           <?php if ($key === 'success'): ?>
             <div class="bg-green-100 text-green-800 text-sm px-4 py-3 mb-4 border border-green-300">
@@ -83,7 +83,7 @@ if (!isset($_SESSION['usuario'])) {
           <?php endif; ?>
         <?php endforeach; ?>
         <?php unset($_SESSION['resultado']); ?>
-      <?php endif; ?>
+      <?php endif; ?> -->
 
       <!-- Form -->
       <form id="reservaForm" action="<?= SITE_URL ?>index.php?action=createReserva" method="POST" class="space-y-5">
@@ -120,25 +120,30 @@ if (!isset($_SESSION['usuario'])) {
           </div>
         </div>
 
-                <!-- Habitación -->
-        <div>
-          <label for="id_habitacion" class="block text-xs font-medium tracking-widest uppercase text-[#3d3422] mb-2">
-            Habitación
-          </label>
-          <select
-            id="id_habitacion"
-            name="id_habitacion"
-            class="w-full px-4 py-3 border border-[#e8ddc9] bg-[#faf8f4] text-sm text-[#1a1610] focus:border-[#c4a97d] transition-colors duration-200"
-          >
-            <option value="">Selecciona una habitación</option>
-            <?php foreach ($habitaciones as $hab): ?>
-              <option value="<?= $hab['id'] ?>">
-                N° <?= $hab['num_habitacion'] ?> — <?= $hab['categoria'] ?> — <?= $hab['max_personas'] ?> personas — $<?= number_format($hab['precio'], 2) ?>/noche
-              </option>
-            <?php endforeach; ?>
-          </select>
-          <div id="error-id_habitacion"></div>
-        </div>
+      <!-- Tipo de habitación -->
+<div>
+    <label for="id_categoria" class="block text-xs font-medium tracking-widest uppercase text-[#3d3422] mb-2">
+        Tipo de habitación
+    </label>
+    <select id="id_categoria" name="id_categoria"
+        class="w-full px-4 py-3 border border-[#e8ddc9] bg-[#faf8f4] text-sm text-[#1a1610] focus:border-[#c4a97d] transition-colors duration-200">
+        <option value="">Selecciona un tipo</option>
+        <?php foreach ($categorias as $categoria): ?>
+            <option value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?></option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+<!-- Habitación disponible (se carga con AJAX) -->
+<div>
+    <label for="id_habitacion" class="block text-xs font-medium tracking-widest uppercase text-[#3d3422] mb-2">
+        Habitación disponible
+    </label>
+    <select id="id_habitacion" name="id_habitacion" disabled
+        class="w-full px-4 py-3 border border-[#e8ddc9] bg-[#faf8f4] text-sm text-[#1a1610] focus:border-[#c4a97d] transition-colors duration-200">
+        <option value="">Primero selecciona un tipo</option>
+    </select>
+</div>
 
 
         <!-- Número de personas -->
@@ -195,6 +200,6 @@ if (!isset($_SESSION['usuario'])) {
 
     </div>
   </main>
-
+<script src="<?= SITE_URL ?>views/js/reservaAjax.js"></script>
 </body>
 </html>

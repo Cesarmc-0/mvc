@@ -5,11 +5,13 @@ require_once __DIR__ . '/models/Users.php';
 require_once __DIR__ . '/controllers/loginController.php';
 require_once __DIR__ . '/controllers/registerController.php';
 require_once __DIR__ . '/controllers/reservaController.php';
+require_once __DIR__ . '/controllers/exportarPDFController.php';
 require_once __DIR__ . '/config/config.php';
 
 $controllerBase     = new loginController();
 $controllerRegister = new registerController();
 $controllerReserva = new reservaController();
+$controllerExportarPDF = new exportarPDFController();
 
 if (isset($_GET['action'])) {
 
@@ -39,6 +41,9 @@ if (isset($_GET['action'])) {
     if ($_GET['action'] == 'getFormCreateReserva') {
     $controllerReserva->getFormCreateReserva('views/html/reserva.php');
 }
+    if ($_GET['action'] == 'getHabitacionesPorCategoria') {
+    $controllerReserva->getHabitacionesPorCategoria();
+}
 
     if ($_GET['action'] == 'createReserva') {
     $controllerReserva->createReserva();
@@ -51,9 +56,10 @@ if (isset($_GET['action'])) {
     $controllerReserva->cancelarReserva();
 }
     if ($_GET['action'] == 'exportarPDF') {
-    $controllerReserva->exportarPDF();
+        $controllerExportarPDF->exportarPDF();
 }
 
 } else {
     $controllerBase->getFormLogin('views/html/home.php');
 }
+?>

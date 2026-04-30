@@ -68,7 +68,7 @@ if (!isset($_SESSION['usuario'])) {
       <?php foreach ($_SESSION['resultado'] as $key => $msg): ?>
         <?php if ($key === 'success'): ?>
           <div class="bg-green-100 text-green-800 text-sm px-4 py-3 mb-6 border border-green-300">
-            ✅ <?= $msg ?>
+            <?= $msg ?>
           </div>
         <?php else: ?>
           <div class="bg-red-100 text-red-800 text-sm px-4 py-3 mb-6 border border-red-300">
@@ -96,7 +96,6 @@ if (!isset($_SESSION['usuario'])) {
         <table class="w-full text-sm text-[#1a1610]">
           <thead class="bg-[#1a1610] text-white text-xs tracking-widest uppercase">
             <tr>
-              <th class="px-6 py-4 text-left">#</th>
               <th class="px-6 py-4 text-left">Habitación</th>
               <th class="px-6 py-4 text-left">Categoría</th>
               <th class="px-6 py-4 text-left">Fecha-Inicio</th>
@@ -105,12 +104,13 @@ if (!isset($_SESSION['usuario'])) {
               <th class="px-6 py-4 text-left">Precio</th>
               <th class="px-6 py-4 text-left">Estado</th>
               <th class="px-6 py-4 text-left">Acciones</th>
+              <th class="px-6 py-4 text-left">Actualizar</th>
+              <th class="px-6 py-4 text-left">PDF</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-[#e8ddc9]">
             <?php foreach ($reservas as $reserva): ?>
               <tr class="hover:bg-[#faf8f4] transition-colors duration-150">
-                <td class="px-6 py-4 text-[#b08f5f]"><?= $reserva['id'] ?></td>
                 <td class="px-6 py-4 font-medium">N° <?= $reserva['num_habitacion'] ?></td>
                 <td class="px-6 py-4"><?= $reserva['categoria'] ?></td>
                 <td class="px-6 py-4"><?= date('d/m/Y', strtotime($reserva['fecha_inicio'])) ?></td>
@@ -138,10 +138,32 @@ if (!isset($_SESSION['usuario'])) {
                        class="text-xs text-red-600 border border-red-300 px-3 py-1 hover:bg-red-50 transition-colors duration-200">
                       Cancelar
                     </a>
+
                   <?php else: ?>
                     <span class="text-xs text-gray-400">—</span>
                   <?php endif; ?>
                 </td>
+                <?php if(!isset($_SESSION['usuario'])): ?>
+                      <a 
+                      href="<?= SITE_URL ?>index.php?action=getFormUpdateReserva&id=<?= $reserva['id'] ?>"
+                      class="text-xs text-blue-600 border border-blue-300 px-3 py-1 hover:bg-blue-50 transition-colors duration-200"
+                    >
+                      Actualizar
+                    </a>
+                  <td class="px-6 py-4">
+                  <a 
+                    href="<?= SITE_URL ?>index.php?action=exportarPDF&id=<?= $reserva['id'] ?>"
+                    target="_blank"
+                    class="text-xs text-green-600 border border-green-300 px-3 py-1 hover:bg-green-50 transition-colors duration-200"
+                  >
+                    PDF
+                  </a>
+                  </td>
+                  
+
+                  <?php else: ?>
+                    <span class="text-xs text-gray-400">—</span>
+                  <?php endif; ?>
               </tr>
             <?php endforeach; ?>
           </tbody>
