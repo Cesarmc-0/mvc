@@ -58,6 +58,9 @@ if (isset($_GET['action'])) {
     if ($_GET['action'] == 'exportarPDF') {
         $controllerExportarPDF->exportarPDF();
 }
+    if ($_GET['action'] == 'exportarPDFPorReserva') {
+    $controllerPDF->exportarPDFPorReserva();
+}
 
 } else {
     $controllerBase->getFormLogin('views/html/home.php');

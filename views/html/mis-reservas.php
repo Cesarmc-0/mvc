@@ -118,6 +118,8 @@ if (!isset($_SESSION['usuario'])) {
                 <td class="px-6 py-4 text-center"><?= $reserva['num_personas'] ?></td>
                 <td class="px-6 py-4">$<?= number_format($reserva['precio'], 0, ',', '.') ?></td>
                 <td class="px-6 py-4">
+                  
+                
                   <?php
                     $colores = [
                       'pendiente'  => 'bg-yellow-100 text-yellow-800',

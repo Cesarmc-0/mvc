@@ -55,6 +55,21 @@
         <h1 class="font-display text-4xl font-light text-[#1a1610]">Iniciar Sesion</h1>
       </div>
 
+            <!-- Mensajes PHP (solo éxito o errores del servidor) -->
+      <?php if (isset($_SESSION['resultado'])): ?>
+        <?php foreach ($_SESSION['resultado'] as $key => $msg): ?>
+          <?php if ($key === 'success'): ?>
+            <div class="bg-green-100 text-green-800 text-sm px-4 py-3 mb-4 border border-green-300">
+              ✅ <?= $msg ?>
+            </div>
+          <?php else: ?>
+            <div class="bg-red-100 text-red-800 text-sm px-4 py-3 mb-4 border border-red-300">
+              ❌ <?= $msg ?>
+            </div>
+          <?php endif; ?>
+        <?php endforeach; ?>
+        <?php unset($_SESSION['resultado']); ?>
+      <?php endif; ?>  
       <!-- Form -->
       <form id="loginForm" action="<?= SITE_URL ?>index.php?action=getFormLoginUser" method="POST" class="space-y-5">
 

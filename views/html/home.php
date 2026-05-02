@@ -54,49 +54,8 @@ if (!isset($_SESSION['usuario'])) {
     <h1 id="hero-title" class="hero__title animate-fade-up animate-delay-2">
       Tu refugio perfecto<br/>te espera
     </h1>
-    <p class="hero__subtitle animate-fade-up animate-delay-3">
-      Reserva en los hoteles más exclusivos del mundo con precios inmejorables.
-    </p>
 
-    <!-- Buscador -->
-    <form class="search-card animate-fade-up animate-delay-4" action="/buscar" method="GET" role="search">
-      <div class="search-card__grid">
-
-        <div class="search-card__field">
-          <label for="destino">Destino</label>
-          <div class="search-card__input-wrapper">
-            <svg class="search-card__icon" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-            </svg>
-            <input id="destino" name="destino" type="search" placeholder="Ciudad o hotel…" autocomplete="off"/>
-          </div>
-        </div>
-
-        <div class="search-card__field">
-          <label for="checkin">Check-in</label>
-          <input id="checkin" name="checkin" type="date"/>
-        </div>
-
-        <div class="search-card__field">
-          <label for="checkout">Check-out</label>
-          <input id="checkout" name="checkout" type="date"/>
-        </div>
-
-        <div class="search-card__field">
-          <label for="huespedes">Huéspedes</label>
-          <div class="search-card__select-row">
-            <select id="huespedes" name="huespedes">
-              <option value="1">1 adulto</option>
-              <option value="2">2 adultos</option>
-              <option value="3">3 adultos</option>
-              <option value="4">4+ adultos</option>
-            </select>
-            <button type="submit" class="btn-primary">Buscar</button>
-          </div>
-        </div>
-
-      </div>
+ 
     </form>
   </section>
 
