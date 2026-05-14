@@ -9,32 +9,8 @@
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap"
     rel="stylesheet"
   />
-  <style>
-    :root {
-      --font-display: 'Cormorant Garamond', serif;
-      --font-body:    'DM Sans', sans-serif;
-    }
-    body          { font-family: var(--font-body); }
-    .font-display { font-family: var(--font-display); }
-
-    .hero-bg {
-      background-image:
-        linear-gradient(to bottom, rgba(26,22,16,0.65) 0%, rgba(26,22,16,0.55) 100%),
-        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1800&auto=format&fit=crop&q=80');
-      background-size: cover;
-      background-position: center;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-up { animation: fadeUp 0.7s ease forwards; opacity: 0; }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.25s; }
-
-    input:focus { outline: none; }
-  </style>
+  <link rel="stylesheet" href="<?= SITE_URL ?>views/styles/base.css">
+  <link rel="stylesheet" href="<?= SITE_URL ?>views/styles/login.css">
 </head>
 <body class="hero-bg min-h-screen flex flex-col">
 

@@ -49,6 +49,35 @@ class ReservaRepository {
     $stmt->execute();
     return $stmt->fetchAll();
 }
+    public function getReservaPorId(int $idReserva, int $idUsuario): ?array {
+    $stmt = $this->db->prepare("
+        SELECT
+            r.id,
+            r.id_habitacion,
+            r.id_metodo_pago,
+            h.num_habitacion,
+            h.id_categoria,
+            c.nombre      AS categoria,
+            r.fecha_inicio,
+            r.fecha_fin,
+            r.num_personas,
+            r.precio,
+            e.nombre      AS estado,
+            m.nombre      AS metodo_pago
+        FROM reservas r
+        INNER JOIN habitaciones h ON r.id_habitacion = h.id
+        INNER JOIN categorias   c ON h.id_categoria  = c.id
+        INNER JOIN estados      e ON r.id_estado      = e.id
+        INNER JOIN metodos_pago m ON r.id_metodo_pago = m.id
+        WHERE r.id = :id AND r.id_usuario = :id_usuario
+    ");
+    $stmt->execute([
+        ':id'         => $idReserva,
+        ':id_usuario' => $idUsuario
+    ]);
+    $resultado = $stmt->fetch();
+    return $resultado ?: null;
+}
     // Obtener reservas de un usuario
 public function getReservasPorUsuario(int $idUsuario): array {
     $stmt = $this->db->prepare("
@@ -108,6 +137,28 @@ public function getReservasPorUsuario(int $idUsuario): array {
         ]);
     }
 
+    public function actualizarReserva(int $idReserva, int $idUsuario, array $datos): bool {
+    $stmt = $this->db->prepare("
+        UPDATE reservas
+        SET id_habitacion  = :id_habitacion,
+            fecha_inicio   = :fecha_inicio,
+            fecha_fin      = :fecha_fin,
+            num_personas   = :num_personas,
+            id_metodo_pago = :id_metodo_pago,
+            precio         = :precio
+        WHERE id = :id AND id_usuario = :id_usuario
+    ");
+    return $stmt->execute([
+        ':id_habitacion'  => $datos['id_habitacion'],
+        ':fecha_inicio'   => $datos['fecha_inicio'],
+        ':fecha_fin'      => $datos['fecha_fin'],
+        ':num_personas'   => $datos['num_personas'],
+        ':id_metodo_pago' => $datos['id_metodo_pago'],
+        ':precio'         => $datos['precio'],
+        ':id'             => $idReserva,
+        ':id_usuario'     => $idUsuario
+    ]);
+}
     public function pendienteReserva(int $idReserva, int $idUsuario): bool {
     $stmt = $this->db->prepare("
         UPDATE reservas 

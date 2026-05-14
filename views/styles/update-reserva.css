@@ -1,0 +1,2 @@
+select:focus,
+input:focus { outline: none; }

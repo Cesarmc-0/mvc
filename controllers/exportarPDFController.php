@@ -11,6 +11,11 @@ class exportarPDFController {
 
     public function exportarPDF() {
 
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: ' . SITE_URL . 'index.php?action=getFormLogin');
+            exit;
+        }
+
         $reservas = $this->reservaRepository->getReservasPorUsuarioPDF(
             $_SESSION['usuario']['id']
         );
@@ -28,7 +33,6 @@ class exportarPDFController {
         $pdf->SetTextColor(255, 255, 255);
         $pdf->SetFont('Arial', 'B', 9);
 
-        $pdf->Cell(10,  8, '#',            1, 0, 'C', true);
         $pdf->Cell(30,  8, 'Habitacion',   1, 0, 'C', true);
         $pdf->Cell(30,  8, 'Categoria',    1, 0, 'C', true);
         $pdf->Cell(35,  8, 'Fecha-Inicio', 1, 0, 'C', true);
@@ -40,14 +44,13 @@ class exportarPDFController {
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('Arial', '', 9);
 
-        foreach ($reservas as $r) {
-            $pdf->Cell(30,  8, 'N ' . $r['num_habitacion'],                     1, 0, 'C');
-            $pdf->Cell(30,  8, $r['categoria'],                                 1, 0, 'C');
-            $pdf->Cell(35,  8, date('d/m/Y', strtotime($r['fecha_inicio'])),    1, 0, 'C');
-            $pdf->Cell(35,  8, date('d/m/Y', strtotime($r['fecha_fin'])),       1, 0, 'C');
-            $pdf->Cell(20,  8, $r['num_personas'],                              1, 0, 'C');
-            $pdf->Cell(35,  8, '$' . number_format($r['precio'], 0, ',', '.'),  1, 0, 'C');
-            $pdf->Cell(30,  8, ucfirst($r['estado']),                           1, 1, 'C');
+        foreach ($reservas as $reservaId) {
+            $pdf->Cell(30,  8, $reservaId['categoria'],                                 1, 0, 'C');
+            $pdf->Cell(35,  8, date('d/m/Y', strtotime($reservaId['fecha_inicio'])),    1, 0, 'C');
+            $pdf->Cell(35,  8, date('d/m/Y', strtotime($reservaId['fecha_fin'])),       1, 0, 'C');
+            $pdf->Cell(20,  8, $reservaId['num_personas'],                              1, 0, 'C');
+            $pdf->Cell(35,  8, '$' . number_format($reservaId['precio'], 0, ',', '.'),  1, 0, 'C');
+            $pdf->Cell(30,  8, ucfirst($reservaId['estado']),                           1, 1, 'C');
         }
 
         $pdf->Output('mis-reservas.pdf', 'D');
@@ -55,6 +58,11 @@ class exportarPDFController {
     }
 
     public function exportarPDFPorReserva() {
+
+    if (!isset($_SESSION['usuario'])) {
+        header('Location: ' . SITE_URL . 'index.php?action=getFormLogin');
+        exit;
+    }
 
     $idReserva = intval($_GET['id'] ?? 0);
 
@@ -64,12 +72,12 @@ class exportarPDFController {
         exit;
     }
 
-    $r = $this->reservaRepository->getReservaPorId(
+    $reservaId = $this->reservaRepository->getReservaPorId(
         $idReserva,
         $_SESSION['usuario']['id']
     );
 
-    if (!$r) {
+    if (!$reservaId) {
         $_SESSION['resultado'] = ['error' => 'Reserva no encontrada.'];
         header('Location: ' . SITE_URL . 'index.php?action=getMisReservas');
         exit;
@@ -98,15 +106,14 @@ class exportarPDFController {
     $pdf->SetFont('Arial', '', 9);
 
     $campos = [
-        'N Reserva'      => $r['id'],
-        'Habitacion'     => 'N ' . $r['num_habitacion'],
-        'Categoria'      => $r['categoria'],
-        'Check-in'       => date('d/m/Y', strtotime($r['fecha_inicio'])),
-        'Check-out'      => date('d/m/Y', strtotime($r['fecha_fin'])),
-        'Personas'       => $r['num_personas'],
-        'Metodo de pago' => $r['metodo_pago'],
-        'Estado'         => ucfirst($r['estado']),
-        'Precio total'   => '$' . number_format($r['precio'], 0, ',', '.')
+        'Habitacion'     => 'N ' . $reservaId['num_habitacion'],
+        'Categoria'      => $reservaId['categoria'],
+        'Fecha-Inicio'       => date('d/m/Y', strtotime($reservaId['fecha_inicio'])),
+        'Fecha-Fin'      => date('d/m/Y', strtotime($reservaId['fecha_fin'])),
+        'Personas'       => $reservaId['num_personas'],
+        'Metodo de pago' => $reservaId['metodo_pago'],
+        'Estado'         => ucfirst($reservaId['estado']),
+        'Precio total'   => '$' . number_format($reservaId['precio'], 0, ',', '.')
     ];
 
     foreach ($campos as $campo => $valor) {
@@ -114,7 +121,7 @@ class exportarPDFController {
         $pdf->Cell(95, 8, $valor, 1, 1, 'L');
     }
 
-    $pdf->Output('reserva-' . $r['id'] . '.pdf', 'D');
+    $pdf->Output('reserva-' . $reservaId['id'] . '.pdf', 'D');
     exit;
 }
 }

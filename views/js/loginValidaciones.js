@@ -29,7 +29,7 @@ const loginConfig = {
       id:    'password',
       rules: [
         { fn: Rules.required,    msg: 'La contraseña es obligatoria.' },
-        { fn: Rules.minLen(6),   msg: 'La contraseña debe tener al menos 6 caracteres.' },
+        { fn: Rules.minLen(8),   msg: 'La contraseña debe tener al menos 8 caracteres.' },
       ],
     },
   ],

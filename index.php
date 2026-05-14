@@ -8,6 +8,7 @@ require_once __DIR__ . '/controllers/reservaController.php';
 require_once __DIR__ . '/controllers/exportarPDFController.php';
 require_once __DIR__ . '/config/config.php';
 
+
 $controllerBase     = new loginController();
 $controllerRegister = new registerController();
 $controllerReserva = new reservaController();
@@ -48,6 +49,18 @@ if (isset($_GET['action'])) {
     if ($_GET['action'] == 'createReserva') {
     $controllerReserva->createReserva();
 }
+
+    if ($_GET['action'] == 'updateReserva') {
+
+    $controllerReserva->updateReserva();
+}
+    // Ver formulario
+if ($_GET['action'] == 'getFormUpdateReserva') {
+    $controllerReserva->getFormUpdateReserva('views/html/update-reserva.php');
+}
+
+
+
     if ($_GET['action'] == 'getMisReservas') {
     $controllerReserva->getMisReservas('views/html/mis-reservas.php');
 }
@@ -56,10 +69,10 @@ if (isset($_GET['action'])) {
     $controllerReserva->cancelarReserva();
 }
     if ($_GET['action'] == 'exportarPDF') {
-        $controllerExportarPDF->exportarPDF();
+    $controllerExportarPDF->exportarPDF();
 }
     if ($_GET['action'] == 'exportarPDFPorReserva') {
-    $controllerPDF->exportarPDFPorReserva();
+    $controllerExportarPDF->exportarPDFPorReserva();
 }
 
 } else {

@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const tipoHabitacion = document.getElementById('id_categoria');
     const numeroHabitacion = document.getElementById('id_habitacion');
 
+    if (tipoHabitacion.value !== '') {
+        tipoHabitacion.dispatchEvent(new Event('change'));
+    }
+
     tipoHabitacion.addEventListener('change', async () => {
 
         const fechaInicio = document.getElementById('fecha_inicio').value;
@@ -48,6 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             numeroHabitacion.disabled = false;
+
+            const habitacionPrevia = numeroHabitacion.dataset.habitacion;
+            if (habitacionPrevia) {
+                numeroHabitacion.value = habitacionPrevia;
+            }
 
         } catch (error) {
 

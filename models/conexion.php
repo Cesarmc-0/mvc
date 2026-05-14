@@ -10,9 +10,9 @@ class Database {
 
             try {
                 self::$conexion = new PDO(
-                    'mysql:host=localhost;dbname=usuarios_prueba;charset=utf8',
-                    'root',
-                    ''
+                    'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=' . DB_CHARSET,
+                    DB_USER,
+                    DB_PASS
                 );
                 // Si hay un error, PHP lanza una excepción
                 self::$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
