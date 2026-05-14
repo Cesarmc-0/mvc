@@ -6,13 +6,16 @@ require_once __DIR__ . '/controllers/loginController.php';
 require_once __DIR__ . '/controllers/registerController.php';
 require_once __DIR__ . '/controllers/reservaController.php';
 require_once __DIR__ . '/controllers/exportarPDFController.php';
+require_once __DIR__ . '/controllers/exportarExcelController.php';
+require_once __DIR__ . '/libs/EmailService.php';
 require_once __DIR__ . '/config/config.php';
 
 
 $controllerBase     = new loginController();
 $controllerRegister = new registerController();
 $controllerReserva = new reservaController();
-$controllerExportarPDF = new exportarPDFController();
+$controllerExportarPDF   = new exportarPDFController();
+$controllerExportarExcel = new exportarExcelController();
 
 if (isset($_GET['action'])) {
 
@@ -73,6 +76,9 @@ if ($_GET['action'] == 'getFormUpdateReserva') {
 }
     if ($_GET['action'] == 'exportarPDFPorReserva') {
     $controllerExportarPDF->exportarPDFPorReserva();
+}
+    if ($_GET['action'] == 'exportarExcel') {
+    $controllerExportarExcel->exportarExcel();
 }
 
 } else {

@@ -30,7 +30,11 @@ header('Expires: 0');
       </span>
       <a href="<?= SITE_URL ?>index.php?action=exportarPDF"
          class="text-sm border border-white/50 text-white px-5 py-2 hover:bg-white hover:text-[#1a1610] transition-all duration-300">
-        Exportar todas mis Reservas 
+        Exportar PDF
+      </a>
+      <a href="<?= SITE_URL ?>index.php?action=exportarExcel"
+         class="text-sm border border-white/50 text-white px-5 py-2 hover:bg-white hover:text-[#1a1610] transition-all duration-300">
+        Exportar Excel
       </a>
       <a href="<?= SITE_URL ?>index.php?action=getFormCreateReserva"
          class="text-sm border border-white/50 text-white px-5 py-2 hover:bg-white hover:text-[#1a1610] transition-all duration-300">

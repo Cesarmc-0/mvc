@@ -184,6 +184,15 @@ public function cancelarReserva() {
     ]);
 
     if ($creada) {
+        $datosEmail = $this->reservaRepository->getReservasPorUsuario($_SESSION['usuario']['id']);
+        $ultimaReserva = end($datosEmail);
+        if ($ultimaReserva) {
+            EmailService::enviarConfirmacionReserva(
+                $ultimaReserva,
+                $_SESSION['usuario']['nombre'],
+                $_SESSION['usuario']['email']
+            );
+        }
         $_SESSION['resultado'] = ['success' => 'Reserva creada correctamente.'];
     } else {
         $_SESSION['resultado'] = ['error' => 'Error al crear la reserva.'];

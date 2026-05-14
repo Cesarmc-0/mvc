@@ -45,6 +45,7 @@ class exportarPDFController {
         $pdf->SetFont('Arial', '', 9);
 
         foreach ($reservas as $reservaId) {
+            $pdf->Cell(30,  8, 'N ' . $reservaId['num_habitacion'],                     1, 0, 'C');
             $pdf->Cell(30,  8, $reservaId['categoria'],                                 1, 0, 'C');
             $pdf->Cell(35,  8, date('d/m/Y', strtotime($reservaId['fecha_inicio'])),    1, 0, 'C');
             $pdf->Cell(35,  8, date('d/m/Y', strtotime($reservaId['fecha_fin'])),       1, 0, 'C');

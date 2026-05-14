@@ -109,6 +109,7 @@ class registerController {
         ]);
 
         if ($creado) {
+            EmailService::enviarBienvenida($nombre, $email);
             return ['success' => 'Usuario creado correctamente'];
         }
 
